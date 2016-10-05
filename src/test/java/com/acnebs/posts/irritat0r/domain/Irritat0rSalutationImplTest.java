@@ -1,4 +1,4 @@
-package com.acnebs.posts.irritat0r;
+package com.acnebs.posts.irritat0r.domain;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
@@ -12,26 +12,7 @@ import java.util.Optional;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Enclosed.class)
-public class IrritatorServiceImplTest {
-
-    public static class GeneralTest {
-        IrritatorServiceImpl service;
-
-        @Before
-        public void setUp() {
-            service = new IrritatorServiceImpl();
-        }
-
-        @Test
-        public void test_getText() throws Exception {
-            String actual = service.getText(Optional.of(new Person(" Jane ")));
-            assertEquals(
-                    "It should yield the default text for a known user with a valid addressText",
-                    "Hey Jane, did you know that it is 8 times more likely to get killed by a pig than by a shark?",
-                    actual);
-        }
-    }
-
+public class Irritat0rSalutationImplTest {
 
     @RunWith(Parameterized.class)
     public static class ParamTest {
@@ -41,44 +22,44 @@ public class IrritatorServiceImplTest {
             return Arrays.asList(new Object[][]{
                     {new Fixtr("It should yield the default text with generic addressing for an anonymous person") {{
                         maybePerson = Optional.empty();
-                        expAddressing = "you";
+                        expectedSalutation = "you";
                     }}},
                     {new Fixtr("It should yield the default text with personalized addressing for a known person") {{
                         maybePerson = Optional.of(new Person("Joni"));
-                        expAddressing = "Joni";
+                        expectedSalutation = "Joni";
                     }}},
                     {new Fixtr("It should yield the default text with generic addressing for a known person without a proper addressText") {{
                         maybePerson = Optional.of(new Person(null));
-                        expAddressing = "you";
+                        expectedSalutation = "you";
                     }}},
                     {new Fixtr("It should yield the default text with generic addressing for a know person without a proper addressText") {{
                         maybePerson = Optional.of(new Person(""));
-                        expAddressing = "you";
+                        expectedSalutation = "you";
                     }}},
                     {new Fixtr("It should yield the default text with generic addressing for a known person with an addressText containing only whitespace") {{
                         maybePerson = Optional.of(new Person(" "));
-                        expAddressing = "you";
+                        expectedSalutation = "you";
                     }}},
                     {new Fixtr("It should yield the default text with a trimmed generic addressing for a known person with padded addressText") {{
                         maybePerson = Optional.of(new Person(" Joni "));
-                        expAddressing = "Joni";
+                        expectedSalutation = "Joni";
                     }}}
             });
         }
 
-        IrritatorServiceImpl service;
+        Irritat0rSalutationImpl service;
 
         @Before
         public void setUp() {
-            service = new IrritatorServiceImpl();
+            service = new Irritat0rSalutationImpl();
         }
 
         @Test
-        public void test_getAddressing() throws Exception {
-            String actual = service.getAddressing(fixture.maybePerson);
+        public void test_getSalutation() throws Exception {
+            String actual = service.getSalutation(fixture.maybePerson);
             assertEquals(
                     fixture.message,
-                    fixture.expAddressing,
+                    fixture.expectedSalutation,
                     actual);
         }
 
@@ -89,7 +70,7 @@ public class IrritatorServiceImplTest {
             }
 
             Optional<Person> maybePerson;
-            String expAddressing;
+            String expectedSalutation;
             String message;
         }
 
