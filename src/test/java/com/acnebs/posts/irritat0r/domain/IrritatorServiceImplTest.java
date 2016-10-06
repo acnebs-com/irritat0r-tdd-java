@@ -58,7 +58,7 @@ public class IrritatorServiceImplTest {
             assertEquals(
                     limit / 3,
                     i,
-                    limit * .01
+                    limit * .05
             );
         }
     }
