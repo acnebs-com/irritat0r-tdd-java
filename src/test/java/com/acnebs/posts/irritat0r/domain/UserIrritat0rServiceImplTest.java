@@ -2,7 +2,7 @@ package com.acnebs.posts.irritat0r.domain;
 import com.acnebs.posts.irritat0r.user.User;
 import com.acnebs.posts.irritat0r.user.UserDaoInMemoryImpl;
 import com.acnebs.posts.irritat0r.user.UserServiceImpl;
-import com.acnebs.posts.irritat0r.util.SysdateStubImpl;
+import com.acnebs.posts.irritat0r.util.SysdateFixedDateImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
@@ -50,12 +50,12 @@ public class UserIrritat0rServiceImplTest {
 
             service = new UserIrritat0rServiceImpl(
                     new UserServiceImpl(userDao),
-                    new IrritatorServiceImpl(
+                    new Irritat0rServiceImpl(
                             new Irritat0rSalutationImpl(),
                             new Irritat0rMessageFactory(
                                     new Irritat0rMessageTextImpl("E = mc^2"),
                                     new Irritat0rMessageEarthMovementImpl(
-                                            new SysdateStubImpl(
+                                            new SysdateFixedDateImpl(
                                                     LocalDateTime.of(2016, 10, 6, 13, 1, 23)
                                             )
                                     )
@@ -67,7 +67,7 @@ public class UserIrritat0rServiceImplTest {
 
         @Test
         public void test_getText() throws Exception {
-            String actual = service.getText(Context.ANY, "123");
+            String actual = service.getText(Optional.of("123"));
             assertEquals("Hey Joni, did you know that E = mc^2?", actual);
         }
 
@@ -95,7 +95,7 @@ public class UserIrritat0rServiceImplTest {
 
         @Test
         public void test_adaptUserToPerson_user_ok() throws Exception {
-            Optional<User> maybeUser = Optional.of(userDao.getUserById("123"));
+            Optional<User> maybeUser = Optional.of(userDao.getUserById(Optional.of("123")));
             final Optional<Person> maybePerson = service.adaptUserToPerson(maybeUser);
             Person person = maybePerson.get();
             assertEquals(
@@ -107,7 +107,7 @@ public class UserIrritat0rServiceImplTest {
                     .atZone(ZoneId.of("GMT"));
             assertEquals(
                     "It should yield the same date time for lastloginTemporal",
-                    expectedLastLoginTemporal, person.getLastLoginTemporal());
+                    expectedLastLoginTemporal, person.getBirthday());
         }
 
 

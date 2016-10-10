@@ -5,10 +5,7 @@ import org.junit.runner.RunWith;
 
 import java.net.URL;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.TimeZone;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -55,7 +52,7 @@ public class UserDaoJsonJacksonImplTest {
             final URL resource = this.getClass().getResource("/users.json");
             UserDaoJsonJacksonImpl userDao = new UserDaoJsonJacksonImpl(resource);
 
-            User user = userDao.getUserById("7f26a500-f02a-45d5-8890-5d42b331dcdf");
+            User user = userDao.getUserById(Optional.of("7f26a500-f02a-45d5-8890-5d42b331dcdf"));
             assertEquals("Patrick", user.getFirstName());
 
             final GregorianCalendar cal = new GregorianCalendar(2015, 10, 23);
@@ -68,7 +65,7 @@ public class UserDaoJsonJacksonImplTest {
             final URL resource = this.getClass().getResource("/users.json");
             UserDaoJsonJacksonImpl userDao = new UserDaoJsonJacksonImpl(resource);
 
-            User user = userDao.getUserById("53c00c1e-b767-4a4f-8b5e-de8c8e9377ba");
+            User user = userDao.getUserById(Optional.of("53c00c1e-b767-4a4f-8b5e-de8c8e9377ba"));
             assertEquals("Christine", user.getFirstName());
 
             final GregorianCalendar cal = new GregorianCalendar(2015, 10, 6);
@@ -81,7 +78,7 @@ public class UserDaoJsonJacksonImplTest {
             final URL resource = this.getClass().getResource("/users.json");
             UserDaoJsonJacksonImpl userDao = new UserDaoJsonJacksonImpl(resource);
 
-            User user = userDao.getUserById("abc");
+            User user = userDao.getUserById(Optional.of("abc"));
             assertNull("It should yield null if no such id", user);
         }
 

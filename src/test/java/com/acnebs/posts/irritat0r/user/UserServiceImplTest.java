@@ -35,13 +35,13 @@ public class UserServiceImplTest {
 
         @Test
         public void test_getUserById_ok() throws Exception {
-            Optional<User> user = userService.getUserById("123");
+            Optional<User> user = userService.getUserById(Optional.of("123"));
             assertEquals("123", user.get().getId());
         }
 
         @Test
         public void test_getUserById_404() throws Exception {
-            Optional<User> user = userService.getUserById("321");
+            Optional<User> user = userService.getUserById(Optional.of("321"));
             assertFalse(
                     "It should yield an empty Optional if no such user id is known",
                     user.isPresent());

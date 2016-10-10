@@ -1,4 +1,5 @@
 package com.acnebs.posts.irritat0r.user;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 /**
@@ -9,6 +10,6 @@ import java.util.function.Consumer;
  * @author andreas.czakaj
  */
 public interface UserDao {
-    User getUserById(String id);
+    User getUserById(Optional<String> id);
     void forEachUser(Consumer<User> consumer);
 }

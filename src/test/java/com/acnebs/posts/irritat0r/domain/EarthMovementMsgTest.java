@@ -1,7 +1,7 @@
 package com.acnebs.posts.irritat0r.domain;
 
 
-import com.acnebs.posts.irritat0r.util.SysdateStubImpl;
+import com.acnebs.posts.irritat0r.util.SysdateFixedDateImpl;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,17 +23,17 @@ public class EarthMovementMsgTest {
     @Test
     public void test_getMessage_known_user_with_last_login_date() throws Exception {
         LocalDateTime now = LocalDateTime.of(2016, 10, 4, 23, 40, 36);
-        SysdateStubImpl sysdate = new SysdateStubImpl(now);
+        SysdateFixedDateImpl sysdate = new SysdateFixedDateImpl(now);
         msg = new Irritat0rMessageEarthMovementImpl(sysdate);
 
         final Person person = Person.Builder
                 .of("Joni")
-                .withLastLoginTemporal(LocalDateTime.of(2016, 10, 4, 23, 40, 33))
+                .withBirthday(LocalDateTime.of(2016, 10, 4, 23, 40, 33))
                 .build();
 
         String actual = msg.getMessage(Optional.of(person));
         assertEquals(
-                "earth has moved 90 km since your last login",
+                "earth has moved 90 km since the day you were born",
                 actual);
     }
 
@@ -41,7 +41,7 @@ public class EarthMovementMsgTest {
     @Test
     public void test_getMessage_known_user_without_last_login_date() throws Exception {
         LocalDateTime now = LocalDateTime.of(2016, 10, 4, 23, 40, 36);
-        SysdateStubImpl sysdate = new SysdateStubImpl(now);
+        SysdateFixedDateImpl sysdate = new SysdateFixedDateImpl(now);
         msg = new Irritat0rMessageEarthMovementImpl(sysdate);
 
         final Person person = Person.Builder

@@ -2,6 +2,7 @@ package com.acnebs.posts.irritat0r.user;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -29,8 +30,8 @@ public class UserDaoInMemoryImpl implements UserDao {
     }
 
     @Override
-    public User getUserById(final String id) {
-        return db.get(id);
+    public User getUserById(final Optional<String> id) {
+        return db.get(id.orElse(""));
     }
 
     @Override

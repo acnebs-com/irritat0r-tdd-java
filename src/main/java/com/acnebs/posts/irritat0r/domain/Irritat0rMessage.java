@@ -2,7 +2,6 @@ package com.acnebs.posts.irritat0r.domain;
 
 
 import java.util.Optional;
-import java.util.stream.Stream;
 
 /**
  * Interface Irritat0rMessage.
@@ -14,7 +13,6 @@ import java.util.stream.Stream;
  * @author acj
  */
 
-interface Irritat0rMessage {
+public interface Irritat0rMessage {
     String getMessage(Optional<Person> maybePerson);
-    Stream<Context> getContexts();
 }

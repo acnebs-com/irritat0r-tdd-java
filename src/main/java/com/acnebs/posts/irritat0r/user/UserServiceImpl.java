@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getUserById(final String id) {
+    public Optional<User> getUserById(final Optional<String> id) {
         return Optional.ofNullable(userDao.getUserById(id));
     }
 

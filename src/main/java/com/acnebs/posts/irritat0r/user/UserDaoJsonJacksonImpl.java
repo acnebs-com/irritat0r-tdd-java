@@ -18,7 +18,7 @@ import java.util.stream.StreamSupport;
  *
  * @author andreas.czakaj
  */
-class UserDaoJsonJacksonImpl implements UserDao {
+public class UserDaoJsonJacksonImpl implements UserDao {
 
     private final URL resource;
 
@@ -26,13 +26,14 @@ class UserDaoJsonJacksonImpl implements UserDao {
         this.resource = resource;
     }
 
-    public User getUserById(final String userId) {
+    @Override
+    public User getUserById(final Optional<String> userId) {
         final Collection<User> users = new HashSet<>();
 
         loadUsers(
-                user -> userId.equals(user.getId()),
+                user -> userId.orElse("").equals(user.getId()),
                 users::add,
-                error -> {throw new RuntimeException("getUserById: Exception e");}
+                error -> {throw error;}
         );
 
         final Iterator<User> iterator = users.iterator();
@@ -44,7 +45,7 @@ class UserDaoJsonJacksonImpl implements UserDao {
         loadUsers(user -> true, consumer, error -> {throw new RuntimeException("forEachUser: Exception e");});
     }
 
-    void loadUsers(final Predicate<User> filter, final Consumer<User> onUser, final Consumer<Exception> onError) {
+    void loadUsers(final Predicate<User> filter, final Consumer<User> onUser, final Consumer<RuntimeException> onError) {
         try {
             final InputStream is = resource.openStream();
             final ObjectMapper mapper = new ObjectMapper();
@@ -67,7 +68,7 @@ class UserDaoJsonJacksonImpl implements UserDao {
     Optional<User> jsonNodeToUser(final JsonNode jsonNode,
                                   final ObjectMapper mapper,
                                   final TypeReference<User> valueTypeRef,
-                                  final Consumer<Exception> onError) {
+                                  final Consumer<RuntimeException> onError) {
         try {
             final JsonParser jsonParser = jsonNode.traverse(mapper);
             return Optional.<User>of(jsonParser.readValueAs(valueTypeRef));

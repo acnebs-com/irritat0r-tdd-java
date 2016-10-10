@@ -1,7 +1,7 @@
 package com.acnebs.posts.irritat0r.domain;
 import java.util.Optional;
 
-class Irritat0rSalutationImpl implements Irritat0rSalutation {
+public class Irritat0rSalutationImpl implements Irritat0rSalutation {
     /*private final String template;
 
     public IrritatorSalutationImpl() {

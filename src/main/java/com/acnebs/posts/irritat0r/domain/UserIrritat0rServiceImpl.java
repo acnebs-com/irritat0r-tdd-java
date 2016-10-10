@@ -14,19 +14,20 @@ import java.util.Optional;
  *
  * @author andreas.czakaj
  */
-class UserIrritat0rServiceImpl {
+public class UserIrritat0rServiceImpl implements UserIrritat0rService {
     private final UserService userService;
-    private final IrritatorService irritatorService;
+    private final Irritat0rService irritat0rService;
 
-    public UserIrritat0rServiceImpl(final UserService userService, final IrritatorService irritatorService) {
+    public UserIrritat0rServiceImpl(final UserService userService, final Irritat0rService irritat0rService) {
         this.userService = userService;
-        this.irritatorService = irritatorService;
+        this.irritat0rService = irritat0rService;
     }
 
-    public String getText(final Context context, final String userId) {
+    @Override
+    public String getText(final Optional<String> userId) {
         final Optional<User> maybeUser = userService.getUserById(userId);
         final Optional<Person> maybePerson = adaptUserToPerson(maybeUser);
-        return irritatorService.getText(context, maybePerson);
+        return irritat0rService.getText(maybePerson);
     }
 
     Optional<Person> adaptUserToPerson(final Optional<User> maybeUser) {
@@ -35,7 +36,7 @@ class UserIrritat0rServiceImpl {
 
             return Optional.of(
                     Person.Builder.of(user.getFirstName())
-                            .withLastLoginTemporal(dateToTemporal(user.getLastLogin()))
+                            .withBirthday(dateToTemporal(user.getLastLogin()))
                             .build()
             );
 

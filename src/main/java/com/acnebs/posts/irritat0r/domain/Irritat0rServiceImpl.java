@@ -3,13 +3,13 @@ package com.acnebs.posts.irritat0r.domain;
 
 import java.util.Optional;
 
-public class IrritatorServiceImpl implements IrritatorService {
+public class Irritat0rServiceImpl implements Irritat0rService {
 
     private final Irritat0rSalutation salutation;
     private final Irritat0rMessageFactory factory;
     private final String template;
 
-    public IrritatorServiceImpl(final Irritat0rSalutation salutation,
+    public Irritat0rServiceImpl(final Irritat0rSalutation salutation,
                                 final Irritat0rMessageFactory factory) {
         this.salutation = salutation;
         this.factory = factory;
@@ -17,10 +17,10 @@ public class IrritatorServiceImpl implements IrritatorService {
     }
 
     @Override
-    public String getText(final Context context, final Optional<Person> maybePerson) {
+    public String getText(final Optional<Person> maybePerson) {
         final String salutation = this.salutation.getSalutation(maybePerson);
 
-        final Irritat0rMessage irritat0rMessage = factory.getMessage(context);
+        final Irritat0rMessage irritat0rMessage = factory.getMessage();
         final String message = irritat0rMessage.getMessage(maybePerson);
 
         return String.format(template, salutation, message);

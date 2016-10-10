@@ -10,6 +10,6 @@ import java.util.function.Consumer;
  * @author andreas.czakaj
  */
 public interface UserService {
-    Optional<User> getUserById(String id);
+    Optional<User> getUserById(Optional<String> id);
     void forEachUser(Consumer<User> consumer);
 }

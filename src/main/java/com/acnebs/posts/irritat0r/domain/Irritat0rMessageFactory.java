@@ -5,7 +5,7 @@ import java.security.SecureRandom;
 import java.util.*;
 import java.util.stream.Collectors;
 
-class Irritat0rMessageFactory {
+public class Irritat0rMessageFactory {
 
     private final Collection<Irritat0rMessage> registry;
 
@@ -19,17 +19,18 @@ class Irritat0rMessageFactory {
         this.registry = registry;
     }
 
-    public Irritat0rMessage getMessage(final Context context) {
+    public Irritat0rMessage getMessage() {
         final List<Irritat0rMessage> msgs = new ArrayList<>();
+        msgs.addAll(registry);
 
-        for (Irritat0rMessage message : registry) {
+        /*for (Irritat0rMessage message : registry) {
             final Set<Context> contexts = message.getContexts()
                     .filter(ctx -> ctx.getClass().equals(context.getClass()))
                     .collect(Collectors.toSet());
             if (contexts.size() > 0) {
                 msgs.add(message);
             }
-        }
+        }*/
 
         return msgs.size() > 0 ? msgs.get(random.nextInt(msgs.size())) : new Irritat0rMessageDefaultImpl();
     }

@@ -7,7 +7,6 @@ import com.acnebs.posts.irritat0r.util.SysdateRealImpl;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 public class Irritat0rMessageEarthMovementImpl implements Irritat0rMessage {
 
@@ -16,12 +15,12 @@ public class Irritat0rMessageEarthMovementImpl implements Irritat0rMessage {
     private final Sysdate sysdate;
 
     private final String template;
-    private final String templateIfNoLastLogin;
+    private final String templateIfNoBirthday;
 
     Irritat0rMessageEarthMovementImpl(final Sysdate sysdate) {
         this.sysdate = sysdate;
-        template = "earth has moved %d km since your last login";
-        templateIfNoLastLogin = "you're moving at a speed of %d km per second around the sun";
+        template = "earth has moved %d km since the day you were born";
+        templateIfNoBirthday = "you're moving at a speed of %d km per second around the sun";
     }
 
     public Irritat0rMessageEarthMovementImpl() {
@@ -32,23 +31,18 @@ public class Irritat0rMessageEarthMovementImpl implements Irritat0rMessage {
     public String getMessage(final Optional<Person> maybePerson) {
         final Person person = maybePerson.orElse(Person.Builder.of("").build());
 
-        if (person.getLastLoginTemporal() == null) {
+        if (person.getBirthday() == null) {
             return String.format(
-                    templateIfNoLastLogin,
+                    templateIfNoBirthday,
                     KM_PER_SECOND
             );
         } else {
             return String.format(
                     template,
-                    getKmsSinceDate(person.getLastLoginTemporal(), sysdate.now())
+                    getKmsSinceDate(person.getBirthday(), sysdate.now())
             );
         }
 
-    }
-
-    @Override
-    public Stream<Context> getContexts() {
-        return Stream.of(new ContextAfterLogin());
     }
 
     long getKmsSinceDate(final Temporal date, final Temporal now) {

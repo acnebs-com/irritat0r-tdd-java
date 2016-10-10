@@ -8,14 +8,14 @@ public class Person {
     }
 
     private final String salutation;
-    private Temporal lastLoginTemporal;
+    private Temporal birthday;
 
     public String getSalutation() {
         return salutation;
     }
 
-    public Temporal getLastLoginTemporal() {
-        return lastLoginTemporal;
+    public Temporal getBirthday() {
+        return birthday;
     }
 
 
@@ -35,8 +35,8 @@ public class Person {
             return person;
         }
 
-        public Builder withLastLoginTemporal(final Temporal value) {
-            person.lastLoginTemporal = value;
+        public Builder withBirthday(final Temporal value) {
+            person.birthday = value;
             return this;
         }
     }
