@@ -21,7 +21,7 @@ public class EarthMovementMsgTest {
 
 
     @Test
-    public void test_getMessage_known_user_with_last_login_date() throws Exception {
+    public void test_getMessage_known_user_with_birthday() throws Exception {
         LocalDateTime now = LocalDateTime.of(2016, 10, 4, 23, 40, 36);
         SysdateFixedDateImpl sysdate = new SysdateFixedDateImpl(now);
         msg = new Irritat0rMessageEarthMovementImpl(sysdate);
@@ -39,7 +39,7 @@ public class EarthMovementMsgTest {
 
 
     @Test
-    public void test_getMessage_known_user_without_last_login_date() throws Exception {
+    public void test_getMessage_known_user_without_birthday() throws Exception {
         LocalDateTime now = LocalDateTime.of(2016, 10, 4, 23, 40, 36);
         SysdateFixedDateImpl sysdate = new SysdateFixedDateImpl(now);
         msg = new Irritat0rMessageEarthMovementImpl(sysdate);
