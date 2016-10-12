@@ -19,14 +19,16 @@ public class Irritat0rServiceTest {
 
         @Before
         public void setUp() throws Exception {
-            service = new Irritat0rService();
+            service = new Irritat0rService(
+                    new Irritat0rMessagePool("2+2=4")
+            );
         }
 
         @Test
         public void test_getText_forUnknownUser() throws Exception {
             assertEquals(
                     "It should yield the text with 'you' as the salutation if no salutation is passed",
-                    "Hey you, did you know that 1+1=2?", service.getText(Optional.empty()));
+                    "Hey you, did you know that 2+2=4?", service.getText(Optional.empty()));
         }
 
         @Test
@@ -34,7 +36,7 @@ public class Irritat0rServiceTest {
             final String actual = service.getText(Optional.of("Joni"));
             assertEquals(
                     "It should yield the text with the given salutation",
-                    "Hey Joni, did you know that 1+1=2?", actual
+                    "Hey Joni, did you know that 2+2=4?", actual
             );
         }
     }
@@ -80,7 +82,7 @@ public class Irritat0rServiceTest {
 
         @Before
         public void setUp() throws Exception {
-            service = new Irritat0rService();
+            service = new Irritat0rService(new Irritat0rMessagePool(""));
         }
 
         public static class Fixture {

@@ -4,9 +4,19 @@ package com.acnebs.posts.irritat0r;
 import java.util.Optional;
 
 class Irritat0rService {
+    private final Irritat0rMessagePool messagePool;
+    private static final String TEMPLATE = "Hey %s, did you know that %s?";
+
+    public Irritat0rService(final Irritat0rMessagePool messagePool) {
+        this.messagePool = messagePool;
+    }
+
     public String getText(final Optional<String> maybeSalutation) {
-        final String template = "Hey %s, did you know that 1+1=2?";
-        return String.format(template, convertSalutation(maybeSalutation));
+        return String.format(
+                TEMPLATE,
+                convertSalutation(maybeSalutation),
+                messagePool.getMessage()
+        );
     }
 
     String convertSalutation(Optional<String> maybeSalutation) {
