@@ -1,39 +1,48 @@
 package com.acnebs.posts.irritat0r;
+
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Supplier;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 public class Irritat0rMessagePoolTest {
+    
     @Test
-    public void test_getMessage() throws Exception {
-        Irritat0rMessagePool pool = new Irritat0rMessagePool("mydefault");
-        assertEquals("mydefault", pool.getMessage());
+    public void test_getMessage_emptyPool() throws Exception {
+        Irritat0rMessagePool pool = new Irritat0rMessagePool();
+        assertEquals(
+                "It should yield the default message if pool is empty",
+                "1+1=2",
+                pool.getMessage());
     }
 
     @Test
-    public void test_getMessage_fromPoolOf2() throws Exception {
-        final String fallbackMessage = "mydefault";
+    public void test_getMessage_poolWith1Message() throws Exception {
+        Irritat0rMessagePool pool = new Irritat0rMessagePool("message 1");
+        assertEquals(
+                "If pool contains 1 message then each call should yield that message.",
+                "message 1",
+                pool.getMessage());
+    }
 
+    @Test
+    public void test_getMessage_poolWith2Messages() throws Exception {
         Irritat0rMessagePool pool = new Irritat0rMessagePool(
-                fallbackMessage,
-                "abc", "def"
+                "message 1", "message 2"
         );
 
         final int times = 10000;
         final Map<String, Integer> messages = getMessageNtimes(pool, times);
 
-        assertMessageDistribution(() -> messages.get("abc"), times, 2);
-        assertMessageDistribution(() -> messages.get("def"), times, 2);
+        assertMessageDistribution(() -> messages.get("message 1"), times, 2);
+        assertMessageDistribution(() -> messages.get("message 2"), times, 2);
 
         assertFalse(
-                "It should not yield the fallback message if 'real' messages exist in the pool",
-                messages.containsKey(fallbackMessage)
+                "It should not yield the default message " +
+                        "if 'real' messages exist in the pool",
+                messages.containsKey("1+1=2")
         );
     }
 
@@ -50,11 +59,13 @@ public class Irritat0rMessagePoolTest {
     private void assertMessageDistribution(final Supplier<Integer> messageCountSupplier,
                                            final int times,
                                            final int numberOfVariants) {
+        final double allowedVariation = .10;
         assertEquals(
-                "It should yield message about half of the times (with 5% variation).",
+                "It should yield message about half of the times " +
+                        "(with 10% variation).",
                 times / numberOfVariants,
                 (double)messageCountSupplier.get(),
-                times * .05
+                times * allowedVariation
         );
     }
 }
